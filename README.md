@@ -1,12 +1,21 @@
 # 💖 Love Animation — Interactive Web Motion Graphics
 
+[![Author](https://img.shields.io/badge/Author-saklincodes-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/saklincodes)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![mo.js](https://img.shields.io/badge/mo.js-Motion_Graphics-FF4081?style=for-the-badge)](https://mojs.github.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-A high-performance, interactive motion graphics animation built for web showcases and social media content creation (Reels / Shorts). The project features dynamic SVG path manipulation, custom motion timelines, particle burst dynamics, and browser-compliant Web Audio API sound synthesis.
+A high-performance, interactive motion graphics animation built for web showcases and social media content creation (Reels / Shorts). Created & developed by **[Saklin](https://github.com/saklincodes)**.
+
+---
+
+## 👤 Author & Credit
+
+Crafted with ❤️ by **Saklin**
+- 🐙 **GitHub Profile**: [@saklincodes](https://github.com/saklincodes)
+- 📦 **Repository**: [I-Love-You-Animation](https://github.com/saklincodes/I-Love-You-Animation)
 
 ---
 
@@ -113,8 +122,8 @@ const playSynthPop = (freq = 400) => {
 
 ## 📄 License
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Distributed under the **MIT License**. Created by **Saklin (@saklincodes)**. See `LICENSE` for more information.
 
 ---
 
-<p align="center">Crafted with ❤️ for Web Motion Enthusiasts</p>
+<p align="center">Crafted with ❤️ by <a href="https://github.com/saklincodes">Saklin</a> for Web Motion Enthusiasts</p>
