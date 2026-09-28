@@ -39,8 +39,10 @@ const initAudio = () => {
   } catch (e) {}
 };
 
-// Auto unlock audio on user gesture
+// Try immediate activation on script load
 initAudio();
+
+// Auto unlock on any hover, movement, touch, or key action
 ['pointermove', 'mousemove', 'mouseenter', 'mouseover', 'touchstart', 'touchend', 'click', 'keydown', 'wheel', 'scroll', 'focus'].forEach((evt) => {
   window.addEventListener(evt, initAudio, { passive: true });
 });
@@ -91,7 +93,7 @@ class Heart extends mojs.CustomShape {
 mojs.addShape("heart", Heart);
 
 const crtBoom = (delay = 0, x = 0, rd = 46) => {
-  const parent = el.container;
+  parent = el.container;
   const crcl = new mojs.Shape({
     shape: "circle",
     fill: "none",
@@ -126,15 +128,6 @@ const crtBoom = (delay = 0, x = 0, rd = 46) => {
   return [crcl, brst];
 };
 
-const resetElements = () => {
-  [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
-    if (item) {
-      item.style.opacity = "1";
-      item.style.transform = "none";
-    }
-  });
-};
-
 const crtLoveTl = () => {
   const move = 1000;
   const boom = 200;
@@ -144,15 +137,18 @@ const crtLoveTl = () => {
   const opts = { duration: move, easing, opacity: 1 };
   const delta = 150;
 
-  return new mojs.Timeline({
-    onStart: () => resetElements(),
-    onRefresh: () => resetElements(),
-  }).add([
+  return new mojs.Timeline().add([
     new mojs.Tween({
       duration: move,
-      onStart: () => resetElements(),
+      onStart: () => {
+        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((el) => {
+          el.style.opacity = 1;
+          el.style =
+            "transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: 1;";
+        });
+      },
       onComplete: () => {
-        [el.l, el.o, el.v, el.e].forEach((item) => item && (item.style.opacity = 0));
+        [el.l, el.o, el.v, el.e].forEach((el) => (el.style.opacity = 0));
         playSound('blop');
       },
     }),
@@ -160,7 +156,7 @@ const crtLoveTl = () => {
     new mojs.Tween({
       duration: move * 2 + boom,
       onComplete: () => {
-        [el.y, el.o2].forEach((item) => item && (item.style.opacity = 0));
+        [el.y, el.o2].forEach((el) => (el.style.opacity = 0));
         playSound('blop');
       },
     }),
@@ -168,7 +164,7 @@ const crtLoveTl = () => {
     new mojs.Tween({
       duration: move * 3 + boom * 2 - delta,
       onComplete: () => {
-        if (el.i) el.i.style.opacity = 0;
+        el.i.style.opacity = 0;
         playSound('blop');
       },
     }),
@@ -176,7 +172,7 @@ const crtLoveTl = () => {
     new mojs.Tween({
       duration: move * 3 + boom * 2,
       onComplete: () => {
-        if (el.u) el.u.style.opacity = 0;
+        el.u.style.opacity = 0;
         playSound('blup');
       },
     }),
@@ -185,13 +181,19 @@ const crtLoveTl = () => {
       duration: 50,
       delay: 4050,
       onUpdate: (progress) => {
-        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
-          if (item) {
-            item.style.opacity = progress;
-          }
+        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((el) => {
+          el.style = `transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: ${
+            1 * progress
+          };`;
         });
       },
-      onComplete: () => resetElements(),
+      onComplete: () => {
+        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((el) => {
+          el.style.opacity = 1;
+          el.style =
+            "transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: 1;";
+        });
+      },
     }),
 
     new mojs.Html({
@@ -210,7 +212,7 @@ const crtLoveTl = () => {
         x: { to: 52 + 54 + 60 },
       })
       .then({
-        duration: 150,
+        duration: 150, // 3550
         easing,
         x: { to: 52 + 54 + 60 + 10 },
       })
@@ -256,27 +258,27 @@ const crtLoveTl = () => {
       // [I] LOVE YOU
       ...opts,
       el: el.i,
-      x: { 0: 52 },
+      x: { 0: 34 },
     })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: 52 + 19 },
+        x: { to: 34 + 19 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: 52 + 19 + 40 },
+        x: { to: 34 + 19 + 40 },
       })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: 52 + 19 + 40 + 30 },
+        x: { to: 34 + 19 + 40 + 30 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: 52 + 19 + 40 + 30 + 30 },
+        x: { to: 34 + 19 + 40 + 30 + 30 },
       }),
 
     new mojs.Html({
@@ -345,27 +347,27 @@ const crtLoveTl = () => {
       // I LOVE YO[U]
       ...opts,
       el: el.u,
-      x: { 0: -52 },
+      x: { 0: -32 },
     })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: -52 - 21 },
-      })
-      .then({
-        duration: boom,
-        easing: easingBoom,
-        x: { to: -52 - 21 - 36 },
-      })
-      .then({
-        duration: boom,
-        easing: easingBoom,
-        x: { to: -52 - 21 - 36 - 31 },
+        x: { to: -32 - 21 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: -52 - 21 - 36 - 31 - 27 },
+        x: { to: -32 - 21 - 36 },
+      })
+      .then({
+        duration: boom,
+        easing: easingBoom,
+        x: { to: -32 - 21 - 36 - 31 },
+      })
+      .then({
+        duration: move,
+        easing,
+        x: { to: -32 - 21 - 36 - 31 - 27 },
       }),
 
     new mojs.Shape({
@@ -436,12 +438,8 @@ const crtLoveTl = () => {
   ]);
 };
 
-let loveTl = crtLoveTl();
-resetElements();
-loveTl.play();
-
+const loveTl = crtLoveTl().play();
 setInterval(() => {
-  resetElements();
   loveTl.replay();
 }, 4300);
 

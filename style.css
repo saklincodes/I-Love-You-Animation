@@ -15,7 +15,8 @@ body {
   background-color: #ffc568;
   font-size: 62.5%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow: hidden;
+}
+@media screen and (max-width: 520px) {
 }
 
 .container {
@@ -23,18 +24,6 @@ body {
   height: 20rem;
   position: relative;
   transform: scale(1.45);
-}
-
-@media screen and (max-width: 600px) {
-  .container {
-    transform: scale(0.9);
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .container {
-    transform: scale(0.7);
-  }
 }
 
 .svg-container {
