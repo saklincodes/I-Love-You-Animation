@@ -126,6 +126,15 @@ const crtBoom = (delay = 0, x = 0, rd = 46) => {
   return [crcl, brst];
 };
 
+const resetElements = () => {
+  [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
+    if (item) {
+      item.style.opacity = "1";
+      item.style.transform = "none";
+    }
+  });
+};
+
 const crtLoveTl = () => {
   const move = 1000;
   const boom = 200;
@@ -135,17 +144,13 @@ const crtLoveTl = () => {
   const opts = { duration: move, easing, opacity: 1 };
   const delta = 150;
 
-  return new mojs.Timeline().add([
+  return new mojs.Timeline({
+    onStart: () => resetElements(),
+    onRefresh: () => resetElements(),
+  }).add([
     new mojs.Tween({
       duration: move,
-      onStart: () => {
-        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
-          if (item) {
-            item.style.opacity = 1;
-            item.style = "transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: 1;";
-          }
-        });
-      },
+      onStart: () => resetElements(),
       onComplete: () => {
         [el.l, el.o, el.v, el.e].forEach((item) => item && (item.style.opacity = 0));
         playSound('blop');
@@ -182,18 +187,11 @@ const crtLoveTl = () => {
       onUpdate: (progress) => {
         [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
           if (item) {
-            item.style = `transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: ${1 * progress};`;
+            item.style.opacity = progress;
           }
         });
       },
-      onComplete: () => {
-        [el.i, el.l, el.o, el.v, el.e, el.y, el.o2, el.u].forEach((item) => {
-          if (item) {
-            item.style.opacity = 1;
-            item.style = "transform: translate(0px, 0px) rotate(0deg) skew(0deg, 0deg) scale(1, 1); opacity: 1;";
-          }
-        });
-      },
+      onComplete: () => resetElements(),
     }),
 
     new mojs.Html({
@@ -255,56 +253,62 @@ const crtLoveTl = () => {
       }),
 
     new mojs.Html({
+      // [I] LOVE YOU
       ...opts,
       el: el.i,
-      x: { 0: 34 },
+      x: { 0: 52 },
     })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: 34 + 19 },
+        x: { to: 52 + 19 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: 34 + 19 + 40 },
+        x: { to: 52 + 19 + 40 },
       })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: 34 + 19 + 40 + 30 },
+        x: { to: 52 + 19 + 40 + 30 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: 34 + 19 + 40 + 30 + 30 },
+        x: { to: 52 + 19 + 40 + 30 + 30 },
       }),
 
     new mojs.Html({
+      // I [L]OVE YOU
       ...opts,
       el: el.l,
       x: { 0: 15 },
     }),
 
     new mojs.Html({
+      // I L[O]VE YOU
       ...opts,
       el: el.o,
       x: { 0: 11 },
     }),
 
     new mojs.Html({
+      // I LO[V]E YOU
       ...opts,
       el: el.v,
       x: { 0: 3 },
     }),
 
     new mojs.Html({
+      // I LOV[E] YOU
       ...opts,
       el: el.e,
       x: { 0: -3 },
     }),
 
     new mojs.Html({
+      // I LOVE [Y]OU
       ...opts,
       el: el.y,
       x: { 0: -20 },
@@ -321,6 +325,7 @@ const crtLoveTl = () => {
       }),
 
     new mojs.Html({
+      // I LOVE Y[O]U
       ...opts,
       el: el.o2,
       x: { 0: -27 },
@@ -337,29 +342,30 @@ const crtLoveTl = () => {
       }),
 
     new mojs.Html({
+      // I LOVE YO[U]
       ...opts,
       el: el.u,
-      x: { 0: -32 },
+      x: { 0: -52 },
     })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: -32 - 21 },
+        x: { to: -52 - 21 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: -32 - 21 - 36 },
+        x: { to: -52 - 21 - 36 },
       })
       .then({
         duration: boom,
         easing: easingBoom,
-        x: { to: -32 - 21 - 36 - 31 },
+        x: { to: -52 - 21 - 36 - 31 },
       })
       .then({
         duration: move,
         easing,
-        x: { to: -32 - 21 - 36 - 31 - 27 },
+        x: { to: -52 - 21 - 36 - 31 - 27 },
       }),
 
     new mojs.Shape({
@@ -430,8 +436,12 @@ const crtLoveTl = () => {
   ]);
 };
 
-const loveTl = crtLoveTl().play();
+let loveTl = crtLoveTl();
+resetElements();
+loveTl.play();
+
 setInterval(() => {
+  resetElements();
   loveTl.replay();
 }, 4300);
 
