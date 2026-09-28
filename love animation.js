@@ -446,3 +446,26 @@ setInterval(() => {
 const volume = 0.2;
 if (el.blup) el.blup.volume = volume;
 if (el.blop) el.blop.volume = volume;
+
+const updateResponsiveScale = () => {
+  const padding = 24;
+  const availW = window.innerWidth - padding;
+  const availH = window.innerHeight - padding;
+  
+  const scaleW = availW / 500;
+  const scaleH = availH / 200;
+  
+  const scale = Math.min(1.45, scaleW, scaleH);
+  const finalScale = Math.max(0.35, scale).toFixed(3);
+  
+  document.documentElement.style.setProperty('--scale-factor', finalScale);
+};
+
+window.addEventListener("resize", updateResponsiveScale, { passive: true });
+window.addEventListener("orientationchange", updateResponsiveScale, { passive: true });
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", updateResponsiveScale);
+} else {
+  updateResponsiveScale();
+}
+
